@@ -49,7 +49,6 @@ The VPC and subnets are configured to support a multi-tier architecture:
 - **Cluster Identifier**: `aurora-cluster-example`
 - **Engine**: `aurora-mysql`
 - **Engine Version**: `5.7.mysql_aurora.2.11.5`
-- **Backup Retention Period**: 5 days
 - **Instances**: 3 instances of type `db.t3.small`
 
 ### 5. Security Groups
@@ -79,14 +78,14 @@ The following outputs are defined:
 ### 1. Clone this repository:
 
 ```bash
-git clone https://github.com/your-repository/terraform-aws-infra.git
+git clone https://github.com/Akshu41/Terraform-AWS-Infra.git
 cd terraform-aws-infra
 
 
-Initialize Terraform:
-bash
+### 2. Initialize Terraform:
+```bash
 terraform init
 
-Preview the resources that Terraform will create:
-bash
+### 3.Preview the resources that Terraform will create:
+```bash
 terraform plan
