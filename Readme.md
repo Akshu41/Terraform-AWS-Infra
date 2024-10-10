@@ -80,12 +80,29 @@ The following outputs are defined:
 ```bash
 git clone https://github.com/Akshu41/Terraform-AWS-Infra.git
 cd terraform-aws-infra
+```
 
 
 ### 2. Initialize Terraform:
 ```bash
-terraform init
+terraform Initialize
+```
 
 ### 3.Preview the resources that Terraform will create:
 ```bash
 terraform plan
+```
+
+
+### 4. Apply the configuration:
+```bash
+terraform apply
+```
+
+
+### 5. To destroy the infrastructure:
+```bash
+
+terraform destroy
+
+```
