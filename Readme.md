@@ -85,7 +85,7 @@ cd Terraform-aws-infra
 
 ### 2. Initialize Terraform:
 ```bash
-terraform Initialize
+terraform initi
 ```
 
 ### 3.Preview the resources that Terraform will create:
