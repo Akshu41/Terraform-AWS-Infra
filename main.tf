@@ -153,12 +153,6 @@ resource "aws_route_table_association" "public_3_association" {
 resource "aws_route_table" "internal_rt" {
   vpc_id = aws_vpc.main.id
 
-  # Route to allow internal communication within the VPC
-  route {
-    cidr_block = "10.0.0.0/16" 
-    gateway_id = aws_internet_gateway.igw.id
-  }
-
   tags = {
     Name = "internal-rt"
   }
