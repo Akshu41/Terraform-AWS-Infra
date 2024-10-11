@@ -1,4 +1,4 @@
-# VPC 
+# VPC
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
 
@@ -100,6 +100,7 @@ resource "aws_subnet" "data_3" {
   }
 }
 
+# DB Subnet Group for Aurora
 resource "aws_db_subnet_group" "aurora-db-gp" {
   name       = "main"
   subnet_ids = [aws_subnet.data_1.id, aws_subnet.data_2.id, aws_subnet.data_3.id]
@@ -107,8 +108,7 @@ resource "aws_db_subnet_group" "aurora-db-gp" {
   tags = {
     Name = "DB subnet group"
   }
-} 
-
+}
 
 # Internet Gateway
 resource "aws_internet_gateway" "igw" {
@@ -117,4 +117,81 @@ resource "aws_internet_gateway" "igw" {
   tags = {
     Name = "main-igw"
   }
+}
+
+# Route table for Public Subnets
+resource "aws_route_table" "public_rt" {
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block = "0.0.0.0/0" 
+    gateway_id = aws_internet_gateway.igw.id
+  }
+
+  tags = {
+    Name = "public-rt"
+  }
+}
+
+# Associate the public route table with each public subnet
+resource "aws_route_table_association" "public_1_association" {
+  subnet_id      = aws_subnet.public_1.id
+  route_table_id = aws_route_table.public_rt.id
+}
+
+resource "aws_route_table_association" "public_2_association" {
+  subnet_id      = aws_subnet.public_2.id
+  route_table_id = aws_route_table.public_rt.id
+}
+
+resource "aws_route_table_association" "public_3_association" {
+  subnet_id      = aws_subnet.public_3.id
+  route_table_id = aws_route_table.public_rt.id
+}
+
+# Internal Route Table for App and Data Subnets
+resource "aws_route_table" "internal_rt" {
+  vpc_id = aws_vpc.main.id
+
+  # Route to allow internal communication within the VPC
+  route {
+    cidr_block = "10.0.0.0/16" 
+    gateway_id = aws_internet_gateway.igw.id
+  }
+
+  tags = {
+    Name = "internal-rt"
+  }
+}
+
+# Associate the internal route table with app subnets (App 1, App 2, App 3)
+resource "aws_route_table_association" "app_1_association" {
+  subnet_id      = aws_subnet.app_1.id
+  route_table_id = aws_route_table.internal_rt.id
+}
+
+resource "aws_route_table_association" "app_2_association" {
+  subnet_id      = aws_subnet.app_2.id
+  route_table_id = aws_route_table.internal_rt.id
+}
+
+resource "aws_route_table_association" "app_3_association" {
+  subnet_id      = aws_subnet.app_3.id
+  route_table_id = aws_route_table.internal_rt.id
+}
+
+# Associate the internal route table with data subnets (Data 1, Data 2, Data 3)
+resource "aws_route_table_association" "data_1_association" {
+  subnet_id      = aws_subnet.data_1.id
+  route_table_id = aws_route_table.internal_rt.id
+}
+
+resource "aws_route_table_association" "data_2_association" {
+  subnet_id      = aws_subnet.data_2.id
+  route_table_id = aws_route_table.internal_rt.id
+}
+
+resource "aws_route_table_association" "data_3_association" {
+  subnet_id      = aws_subnet.data_3.id
+  route_table_id = aws_route_table.internal_rt.id
 }
