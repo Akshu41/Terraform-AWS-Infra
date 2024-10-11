@@ -1,7 +1,7 @@
 # EC2 Instances (Nginx) in App Subnets
 resource "aws_instance" "nginx" {
   count = 3
-  ami           = "ami-054a53dca63de757b"  # Replace with your desired Nginx AMI ID
+  ami           = "ami-054a53dca63de757b" 
   instance_type = "t2.micro"
   
   subnet_id     = element([aws_subnet.app_1.id, aws_subnet.app_2.id, aws_subnet.app_3.id], count.index)
