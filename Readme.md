@@ -6,6 +6,7 @@ This project sets up an AWS infrastructure using Terraform to deploy a high-avai
 - Application Load Balancer (ALB) forwarding traffic to EC2 instances running Nginx
 - Aurora MySQL database cluster
 - Security Groups to secure the environment
+- Route table for internal communication.
 
 ## Prerequisites
 
@@ -20,6 +21,7 @@ This Terraform code deploys the following AWS resources:
 
 - **VPC**: A virtual private cloud with a CIDR block of `10.0.0.0/16`.
 - **Subnets**: Three public subnets for the ALB and three app subnets for EC2 instances running Nginx. Additionally, three data subnets are created for the Aurora database cluster.
+- **Route table**: Route table for internal communication.
 - **Application Load Balancer (ALB)**: The ALB forwards HTTP traffic on port 80 to a target group containing the EC2 instances running Nginx.
 - **EC2 Instances**: Three EC2 instances (Nginx) running in different availability zones to ensure high availability.
 - **Aurora MySQL**: A highly available MySQL database cluster with three instances across different subnets.
